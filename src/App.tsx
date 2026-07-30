@@ -5,11 +5,13 @@ import { AuditResult, GBPData } from "./types";
 import { performAudit } from "./services/gemini";
 import { motion, AnimatePresence } from "motion/react";
 import { Layout, ShieldCheck, Globe, Zap } from "lucide-react";
+import { InfoModal } from "./components/InfoModals";
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState<AuditResult | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [activeModal, setActiveModal] = useState<"how-it-works" | "seo-guidelines" | null>(null);
 
   const handleAudit = async (data: GBPData | string) => {
     setIsLoading(true);
@@ -30,7 +32,7 @@ export default function App() {
       {/* Navigation / Header */}
       <nav className="bg-white border-b border-gray-200 px-6 py-4 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 cursor-pointer" onClick={() => setResult(null)}>
             <div className="bg-blue-600 p-1.5 rounded-lg">
               <ShieldCheck className="w-6 h-6 text-white" />
             </div>
@@ -39,14 +41,31 @@ export default function App() {
             </span>
           </div>
           <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-500">
-            <a href="#" className="hover:text-blue-600 transition-colors">How it works</a>
-            <a href="#" className="hover:text-blue-600 transition-colors">SEO Guidelines</a>
-            <a href="#" className="bg-blue-50 text-blue-600 px-4 py-2 rounded-full hover:bg-blue-100 transition-colors">
+            <button
+              onClick={() => setActiveModal("how-it-works")}
+              className="hover:text-blue-600 transition-colors font-medium bg-transparent border-0 cursor-pointer"
+            >
+              How it works
+            </button>
+            <button
+              onClick={() => setActiveModal("seo-guidelines")}
+              className="hover:text-blue-600 transition-colors font-medium bg-transparent border-0 cursor-pointer"
+            >
+              SEO Guidelines
+            </button>
+            <span className="bg-blue-50 text-blue-600 px-4 py-2 rounded-full hover:bg-blue-100 transition-colors select-none text-xs">
               v2026.1.0
-            </a>
+            </span>
           </div>
         </div>
       </nav>
+
+      {/* Info Modals */}
+      <InfoModal
+        isOpen={activeModal !== null}
+        onClose={() => setActiveModal(null)}
+        type={activeModal || "how-it-works"}
+      />
 
       <main className="py-12">
         <AnimatePresence mode="wait">
