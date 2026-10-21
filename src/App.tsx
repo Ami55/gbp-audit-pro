@@ -134,7 +134,7 @@ export default function App() {
       <footer className="py-12 border-t border-gray-200 mt-12">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <p className="text-gray-400 text-sm">
-            <strong>&copy; 2026 GBP Audit Pro.</strong> Developed by <strong>Ami - SEO Girl</strong>. All rights reserved.
+            <strong>&copy; 2026 GBP Audit Pro.</strong> Developed by <strong>SEO Girl - Ami</strong>. All rights reserved.
           </p>
         </div>
       </footer>
